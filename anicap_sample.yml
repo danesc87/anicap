@@ -1,0 +1,34 @@
+#########################################
+## This is a sample of configuration   ##
+## for Anicap Backend service          ##
+## you should replace for your own     ##
+## but should contains all fields      ##
+## otherwise Anicap will use a default ##
+## config for the all them             ##
+#########################################
+
+# Ip address of Anicap backend 0.0.0.0 means can accept connections from everywhere
+ip_address: 0.0.0.0
+# Port where Anicap backend will listen
+server_port: 8090
+# Log type and level could be something like:
+# ERROR, WARN, INFO, DEBUG, TRACE
+# or have specified a library like:
+# actix_web=DEBUG, actix_web=INFO
+log_type: DEBUG
+# Database config
+database:
+  # URL of database for Anicap, should contain:
+  # user, pass, ip address, port and db schema
+  # - Mysql mysql://user:pass@ip:port/db_name
+  # - PostgreSQl mysql://user:pass@ip:port/db_name
+  # - SQLite
+  db_url: mysql://user:pass@ip:port/db_name
+  # Connection pool allow maximum number of connections managed by the pool
+  pool_size: 6
+# Token config
+token:
+  # Super secret key for encoding tokens
+  jwt_secret: anicap-super-secret-key
+  # Duration in minutes
+  duration: 60
