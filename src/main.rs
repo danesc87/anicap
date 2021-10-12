@@ -11,9 +11,11 @@ extern crate failure;
 #[macro_use]
 extern crate lazy_static;
 
-mod config;
+mod configuration;
 mod utils;
 mod models;
+
+use configuration::route_config::{get_cors, routes};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -32,9 +34,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
         .wrap(Logger::default())
-        // .wrap() // Cors
-        // .data() //Database
-        // .config() // Routes
+        .wrap(get_cors()) // Cors
+        .data(utils::database_utils::connect_database()) //Database
+        .configure(routes) // Routes
     })
     .bind(server_url)?
     .run()
