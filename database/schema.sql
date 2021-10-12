@@ -1,0 +1,24 @@
+---------------------------
+-- ANICAP DATABASE SCRIPTS --
+---------------------------
+
+CREATE TABLE IF NOT EXISTS app_user (
+  id SMALLINT NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  register_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS user_serie (
+  id SMALLINT NOT NULL AUTO_INCREMENT,
+  user_id SMALLINT NOT NULL,
+  serie VARCHAR(255) NOT NULL UNIQUE,
+  score FLOAT NOT NULL DEFAULT 0.0
+  chapter SMALLINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES app_user (id)
+);
