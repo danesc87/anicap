@@ -1,7 +1,7 @@
 use serde::Serialize;
 use actix_web::{HttpResponse, error::ResponseError};
 
-#[derive(Fail, Serialize)]
+#[derive(Debug, Fail, Serialize)]
 pub enum ServerError {
     #[fail(display="{} Bad Request", _0)]
     InsertFailure(String),

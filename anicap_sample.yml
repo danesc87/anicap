@@ -10,7 +10,7 @@
 # Ip address of Anicap backend 0.0.0.0 means can accept connections from everywhere
 ip_address: 0.0.0.0
 # Port where Anicap backend will listen
-server_port: 8090
+server_port: 8085
 # Log type and level could be something like:
 # ERROR, WARN, INFO, DEBUG, TRACE
 # or have specified a library like:
@@ -22,8 +22,8 @@ database:
   # user, pass, ip address, port and db schema
   # - Mysql mysql://user:pass@ip:port/db_name
   # - PostgreSQl mysql://user:pass@ip:port/db_name
-  # - SQLite
-  db_url: mysql://user:pass@ip:port/db_name
+  # - SQLite ./anicap.db
+  db_url: ./anicap.db
   # Connection pool allow maximum number of connections managed by the pool
   pool_size: 6
 # Token config

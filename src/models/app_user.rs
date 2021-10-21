@@ -1,17 +1,15 @@
 use serde::{Deserialize, Serialize};
 use super::token::Claims;
-use crate::utils::database_utils::SqlConnection;
-use crate::utils::error_mapper::ServerError;
-
 use diesel::{
     insert_into,
-    update,
     QueryDsl,
     RunQueryDsl,
     ExpressionMethods
 };
 use chrono::NaiveDateTime;
 
+use crate::utils::database_utils::SqlConnection;
+use crate::utils::error_mapper::ServerError;
 use super::schema::app_user;
 use super::schema::app_user::dsl::*;
 
@@ -74,7 +72,7 @@ impl AppUser {
             .filter(username.eq(login_app_user.username.clone()))
             .filter(password.eq(BASE64.encode(login_app_user.password.as_bytes())))
             .first::<AppUser>(connection)
-            .map_err(|error| { ServerError::ObjectNotFound(login_app_user.username.to_string()) });
+            .map_err(|_| { ServerError::ObjectNotFound(login_app_user.username.to_string()) });
 
         logged_app_user.and_then(Claims::create_token)
     }
@@ -83,6 +81,6 @@ impl AppUser {
         app_user
             .filter(id.eq(app_user_id))
             .get_result(connection)
-            .map_err(|_| { ServerError::ObjectNotFound(app_user_id.into()) })
+            .map_err(|_| { ServerError::ObjectNotFound(app_user_id.to_string()) })
     }
 }

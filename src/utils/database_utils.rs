@@ -32,6 +32,6 @@ pub fn pool_handler(
     connection_pool
         .ok_or(HttpResponse::InternalServerError().json("No Data Base connection exists!".to_owned()))
         .and_then(|pool| {
-             pool.get().map_err(|e| HttpResponse::InternalServerError().json(e.to_string()))
+             pool.get().map_err(|error| HttpResponse::InternalServerError().json(error.to_string()))
         })
 }

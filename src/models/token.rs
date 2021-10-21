@@ -1,15 +1,5 @@
 use serde::{Deserialize, Serialize};
-use chrono:: {NaiveDate, Duration};
-use super::app_user::{AppUser, AppUserToken};
-use crate::utils::database_utils::SqlConnection;
-use crate::utils::error_mapper::ServerError;
-
-use diesel::{
-    QueryDsl,
-    insert_into,
-    RunQueryDsl,
-    ExpressionMethods
-};
+use chrono::Duration;
 use jsonwebtoken::{
     encode,
     decode,
@@ -20,6 +10,9 @@ use jsonwebtoken::{
     Validation,
     TokenData
 };
+
+use super::app_user::{AppUser, AppUserToken};
+use crate::utils::error_mapper::ServerError;
 
 #[derive(Serialize, Deserialize)]
 pub struct Claims {
@@ -41,7 +34,7 @@ impl Claims {
         .map_err(|error| { ServerError::TokenCreationError(error.to_string()) });
 
         Ok(AppUserToken {
-            token_type: "Brearer".into(),
+            token_type: "Bearer".into(),
             access_token: token.unwrap()
         })
     }
@@ -54,6 +47,14 @@ impl Claims {
         )
     }
 
+    pub fn is_valid_token(token: &str) -> bool {
+        let decoded_token = Self::decode_token(token).unwrap().claims;
+        if decoded_token.exp > chrono::Local::now().timestamp() {
+            return true;
+        }
+        false
+    }
+
     fn with_app_user(app_user: &AppUser) -> Self {
         use chrono::Local;
         let token_duration = crate::configuration::server_config::SERVER_CONFIG.token.duration;
@@ -61,7 +62,7 @@ impl Claims {
         Claims {
             id: app_user.id,
             username: app_user.username.to_owned(),
-            exp: (Local::now() + Duration::minutes(token_duration.into)).timestamp()
+            exp: (Local::now() + Duration::minutes(token_duration.into())).timestamp()
         }
     }
 

@@ -54,7 +54,7 @@ impl Default for ServerConfig {
     fn default() -> Self {
         ServerConfig {
             ip_address: String::from("0.0.0.0"),
-            server_port: 8090,
+            server_port: 8085,
             log_type: String::from("actix_web=DEBUG"),
             database: ServerDataBaseConfig::default(),
             token: ServerTokenConfig::default()
