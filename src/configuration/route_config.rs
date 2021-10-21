@@ -7,5 +7,22 @@ pub fn get_cors() -> Cors {
 
 // Endpoints registration config
 pub fn routes(config: &mut web::ServiceConfig) {
-    // Only imports of Endpoints
+    use crate::controller::{
+        app_user_controller::{
+            register,
+            login
+        },
+        user_serie_controller::{
+            insert_serie,
+            get_series,
+            update_serie
+        }
+    };
+
+    config
+        .service(register)
+        .service(login)
+        .service(insert_serie)
+        .service(get_series)
+        .service(update_serie);
 }

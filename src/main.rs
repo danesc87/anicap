@@ -14,20 +14,22 @@ extern crate lazy_static;
 mod configuration;
 mod utils;
 mod models;
+mod controller;
+mod security;
 
 use configuration::route_config::{get_cors, routes};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // Put log type as env variable since env_logger uses it
-    std::env::set_var("RUST_LOG", "");
+    std::env::set_var("RUST_LOG", configuration::server_config::SERVER_CONFIG.clone().log_type);
     // Init env_logger
     env_logger::init();
 
     let server_url = format!(
         "{}:{}",
-        "127.0.0.1",
-        "8085"
+        configuration::server_config::SERVER_CONFIG.ip_address,
+        configuration::server_config::SERVER_CONFIG.server_port
     );
     println!("\nServer running on :{}\n", server_url);
 

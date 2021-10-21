@@ -18,8 +18,9 @@ table! {
     user_serie (id) {
         id -> SmallInt,
         user_id -> SmallInt,
-        serie -> Varchar,
-        score -> Float,
+        name -> Varchar,
+        season -> SmallInt,
         chapter -> SmallInt,
+        score -> Float,
     }
 }
