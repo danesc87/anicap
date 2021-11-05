@@ -107,7 +107,7 @@ mod settings_test {
     #[test]
     fn get_default_db_config() {
         let expected = ServerDataBaseConfig {
-            db_url: String::from("mysql://user:pass@ip:port/db_name"),
+            db_url: String::from("./anicap.db"),
             pool_size: 6
         };
 
@@ -132,7 +132,7 @@ mod settings_test {
     fn get_default_server_config() {
         let expected = ServerConfig {
             ip_address: String::from("0.0.0.0"),
-            server_port: 8090,
+            server_port: 8085,
             log_type: String::from("actix_web=DEBUG"),
             database: ServerDataBaseConfig::default(),
             token: ServerTokenConfig::default()
