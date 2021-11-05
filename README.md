@@ -22,7 +22,7 @@ server_port: 8085
 # ERROR, WARN, INFO, DEBUG, TRACE
 # or have specified a library like:
 # actix_web=DEBUG, actix_web=INFO
-log_type: DEBUG
+log_type: actix_web=DEBUG
 # Database config
 database:
   # URL of database for Anicap, should contain:
